@@ -138,12 +138,19 @@ function syncFromForm() {
 
 function buildPreviewHtml() {
   const inlineConfig = `<script>${serializeConfig(config).replace(/<\/script>/g, '<\\/script>')}<\/script>`;
+  const previewStyle = `
+    <style>
+      #envelopeScreen,
+      #musicToggle,
+      audio { display: none !important; }
+      #invitationContent { display: block !important; }
+      body { min-height: 100vh; }
+    </style>
+  `;
   return baseHtml
-    .replace(/<head>/, '<head><base href="../">')
+    .replace(/<head>/, `<head><base href="../">${previewStyle}`)
     .replace(/<script src="config\.js"><\/script>/, inlineConfig)
-    .replace(/<script defer src="https:\/\/analytics\.pocketstiven\.com\/script\.js"[^>]*><\/script>/, '')
-    .replace(/<div id="envelopeScreen"[\s\S]*?<\/div>\s*<div id="invitationContent">/, '<div id="invitationContent">')
-    .replace(/<audio id="bgMusic"[\s\S]*?<\/audio>/, '');
+    .replace(/<script defer src="https:\/\/analytics\.pocketstiven\.com\/script\.js"[^>]*><\/script>/, '');
 }
 
 function renderPreview() {
