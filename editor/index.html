@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor visual de invitación</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="editor-shell">
+    <aside class="editor-panel">
+      <header class="editor-header">
+        <p>Editor privado</p>
+        <h1>Invitación en vivo</h1>
+        <span>Cambia textos, datos y enlaces sin tocar código.</span>
+      </header>
+
+      <div class="editor-actions">
+        <button id="refreshPreview" type="button">
+          <i data-lucide="refresh-cw"></i>
+          Vista previa
+        </button>
+        <button id="downloadConfig" type="button">
+          <i data-lucide="download"></i>
+          Descargar config.js
+        </button>
+      </div>
+
+      <section class="editor-section">
+        <h2>Pareja</h2>
+        <div class="field-grid two">
+          <label>Nombre 1<input data-path="pareja.nombre1" type="text"></label>
+          <label>Nombre 2<input data-path="pareja.nombre2" type="text"></label>
+        </div>
+        <label>Título del navegador<input data-path="pareja.tituloPagina" type="text"></label>
+      </section>
+
+      <section class="editor-section">
+        <h2>Evento</h2>
+        <label>Fecha y hora<input data-path="evento.fechaCuentaRegresiva" type="datetime-local"></label>
+        <label>Lugar<input data-path="evento.lugar" type="text"></label>
+        <label>Link del mapa<input data-path="evento.mapaUrl" type="url"></label>
+        <label>Estacionamiento<input data-path="evento.estacionamiento" type="text"></label>
+      </section>
+
+      <section class="editor-section">
+        <h2>Textos principales</h2>
+        <label>Título principal<input data-path="textos.tituloPrincipal" type="text"></label>
+        <label>Momentos<input data-path="textos.momentosTitulo" type="text"></label>
+        <label>Confirmación<input data-path="textos.confirmacionTitulo" type="text"></label>
+        <label>Texto confirmación<textarea data-path="textos.confirmacionTexto" rows="3"></textarea></label>
+        <label>Regalos<textarea data-path="textos.regalosTexto" rows="3"></textarea></label>
+      </section>
+
+      <section class="editor-section">
+        <h2>Formulario</h2>
+        <div class="field-grid two">
+          <label>ID confirmación<input data-path="formulario.idConfirmacion" type="text"></label>
+          <label>Cupos<input data-path="formulario.cupos" type="number" min="1"></label>
+        </div>
+        <label>Invitados, uno por línea<textarea id="guestList" rows="4"></textarea></label>
+      </section>
+
+      <section class="editor-section">
+        <h2>Multimedia</h2>
+        <label>Música<input data-path="multimedia.musica" type="text"></label>
+        <label>Fondo floral<input data-path="multimedia.fondoFlores" type="text"></label>
+        <label>Video<input data-path="multimedia.videoAnillos" type="url"></label>
+        <label>Fotos carrusel, una URL por línea<textarea id="carouselList" rows="5"></textarea></label>
+        <label>Fotos momentos, una URL por línea<textarea id="momentsList" rows="6"></textarea></label>
+      </section>
+
+      <section class="editor-section">
+        <h2>Avanzado</h2>
+        <label>Config JSON<textarea id="configJson" rows="12" spellcheck="false"></textarea></label>
+        <button id="applyJson" type="button" class="secondary-action">
+          <i data-lucide="braces"></i>
+          Aplicar JSON
+        </button>
+      </section>
+    </aside>
+
+    <section class="preview-panel">
+      <div class="preview-toolbar">
+        <span id="previewStatus">Cargando configuración...</span>
+        <div>
+          <button id="mobilePreview" type="button">Celular</button>
+          <button id="desktopPreview" type="button">PC</button>
+        </div>
+      </div>
+      <div id="inlineToolbar" class="inline-toolbar hidden" aria-hidden="true">
+        <span id="inlineToolbarLabel">Texto</span>
+        <input id="inlineColor" type="color" title="Color">
+        <select id="inlineFont" title="Tipografía">
+          <option value="">Fuente original</option>
+          <option value="'Alex Brush', cursive">Alex Brush</option>
+          <option value="'Montserrat', sans-serif">Montserrat</option>
+          <option value="Georgia, serif">Georgia</option>
+          <option value="'Times New Roman', serif">Clásica</option>
+        </select>
+        <input id="inlineSize" type="number" min="10" max="96" step="1" title="Tamaño">
+        <button id="inlineDone" type="button">Listo</button>
+      </div>
+      <div class="preview-frame-wrap mobile" id="previewWrap">
+        <iframe id="previewFrame" title="Vista previa de invitación"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <script src="editor.js"></script>
+</body>
+</html>

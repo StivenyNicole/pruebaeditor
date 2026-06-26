@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Boda - Stiven & Nicole</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+    <script defer src="https://analytics.pocketstiven.com/script.js" data-website-id="ee42a76c-0bc9-4075-a6e3-af8be0b3b190"></script>
+    <script src="config.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    
+    
+
+    
+</head>
+<body class="flex justify-center min-h-screen text-gray-700">
+   <div id="envelopeScreen" class="fixed inset-0 bg-[#faf7f2] flex items-center justify-center z-[99999] overflow-hidden">
+       <audio id="bgMusic" loop>
+    <source src="ordinary.mp3" type="audio/mpeg">
+</audio>
+
+    <div class="envelope-glow"></div>
+    <div id="envelopeImage" class="envelope-wrapper relative z-10" role="button" aria-label="Abrir invitación">
+        <div class="envelope-half left">
+            <img src="https://lh3.googleusercontent.com/d/1Vi_7lDFTrJxRkd6ZJt15xwSvz5IgK5kV" alt="Invitación">
+        </div>
+        <div class="envelope-half right">
+            <img src="https://lh3.googleusercontent.com/d/1Vi_7lDFTrJxRkd6ZJt15xwSvz5IgK5kV" alt="">
+        </div>
+    </div>
+</div>
+
+<div id="invitationContent">
+    <div class="invitation-container bg-white/95 backdrop-blur-md w-full max-w-md md:max-w-xl shadow-2xl overflow-hidden flex flex-col">
+
+    <div class="floral-frame"></div>
+        
+        <div class="relative w-full h-[70vh] md:h-[80vh] overflow-hidden">
+            <div id="hero-text" class="absolute top-16 left-0 w-full flex items-start justify-center z-30 fade-text visible">
+                <h1 class="font-script text-7xl text-white drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)] text-center leading-tight">
+                    Stiven <br> <span class="text-5xl">&</span> <br> Nicole
+                    <span class="hero-subtitle block font-sans text-[0.62rem] uppercase tracking-[0.34em] mt-4 text-white/90">26 diciembre 2026</span>
+                </h1>
+            </div>
+
+            <div class="relative w-full h-full" id="carousel">
+    <img src="https://lh3.googleusercontent.com/d/1CCfCxNSFVo2wneFatwPiyVv9g8tQ_jir" class="slide active">
+    <img src="https://lh3.googleusercontent.com/d/1GHfjmuAskYM9x1nZXOPGr6OSp9RqnxwX" class="slide">
+    <img src="https://lh3.googleusercontent.com/d/1GmhBzma28wzTl1DvKMEhHzPgq8GEEnQQ" class="slide">
+    <img src="https://lh3.googleusercontent.com/d/1wsmpiUtyOSfXlqRdGGlRrwBxvd-IcNMD" class="slide">
+</div>
+            
+            <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white/95 via-white/50 to-transparent z-20"></div>
+        </div>
+        
+        <div class="px-6 py-12 text-center relative z-10 bible-card">
+
+    <h3 class="font-script text-4xl text-olive-800 mb-6">
+        Nuestra Promesa
+    </h3>
+
+
+
+<div class="bible-card">
+
+    <button type="button" id="promiseCard" class="promise-card bg-white/60 backdrop-blur-md rounded-2xl p-8 shadow-lg border border-white/50 text-center bible-card-content" aria-label="Ver mensaje de nuestra promesa">
+
+
+    <p class="text-xl mb-4 flower-icon love-flower">❦</p>
+
+    <p class="italic text-gray-600 leading-8 text-base">
+        "Y sobre todas estas cosas vestíos de amor, que es el vínculo perfecto."
+    </p>
+
+    <div class="mt-6 text-xs tracking-[0.25em] uppercase text-gray-500">
+        Colosenses 3:14
+    </div>
+
+    </button>
+</div>
+
+
+
+
+</div>
+
+        <div class="px-6 py-10 text-center relative z-10 reveal">
+            <h2 class="font-script text-5xl text-olive-800 mb-8">
+    ¡Nos casamos!
+</h2>
+            
+           
+
+            <h3 class="font-script text-3xl mb-4">¡Save The Date!</h3>
+            <p class="text-xs text-gray-400 tracking-widest mb-4">DICIEMBRE 2026</p>
+            <div id="saveDateCalendar" class="text-sm text-gray-600 grid grid-cols-7 gap-2 max-w-[250px] mx-auto text-center mb-6">
+                <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+            </div>
+        </div>
+
+        <div class="px-6 py-12 border-t border-gray-100 reveal bg-gray-50/50 relative z-10 text-center">
+            
+            <h3 class="text-sm uppercase tracking-[0.2em] font-medium text-gray-600 mb-6">
+                CELEBRA CON NOSOTROS
+            </h3>
+
+            <div class="relative w-full h-[50px] flex justify-center mb-3">
+                <svg viewBox="0 0 200 80" class="w-[180px] h-auto absolute top-0">
+                    <path id="monthCurve" d="M 20,70 A 80,45 0 0,1 180,70" fill="transparent" />
+                    <text font-family="'Montserrat', sans-serif" font-size="14" font-weight="500" fill="#4b5563" letter-spacing="4">
+                        <textPath href="#monthCurve" startOffset="50%" text-anchor="middle">DICIEMBRE</textPath>
+                    </text>
+                </svg>
+            </div>
+            
+            <div class="flex items-center justify-center gap-4 mb-10 text-gray-700 max-w-[320px] mx-auto">
+    <div class="flex-1 border-t-[2px] border-b-[2px] border-gray-700 py-3 flex justify-center">
+        <p class="text-[0.75rem] uppercase tracking-[0.15em] font-medium zoom-seq delay-0">
+            SÁBADO
+        </p>
+    </div>
+    
+    <div class="text-[4.5rem] font-bold text-gray-700 leading-none px-1 zoom-seq date-number">
+        26
+    </div>
+    
+    <div class="flex-1 border-t-[2px] border-b-[2px] border-gray-700 py-3 flex justify-center">
+        <p class="text-[0.75rem] uppercase tracking-[0.15em] font-medium zoom-seq delay-8">
+            4:00 P.M.
+        </p>
+    </div>
+</div>
+
+
+            <!-- Ilustración de la pareja con enlace directo y difuminado -->
+           <div class="flex justify-center mb-10">
+           <img src="https://lh3.googleusercontent.com/d/1SnxaSyhE0EG95z9vwPfaZ22CD-VUWy1N" 
+         alt="Ilustración de la pareja" 
+         class="w-[200px] h-auto object-cover blurred-edges">
+</div>
+
+
+            <div class="mb-8 text-gray-600">
+                <p class="text-[0.8rem] uppercase tracking-[0.15em] font-medium mb-1">
+                    CEREMONIA CATÓLICA
+                </p>
+                <p class="text-[0.8rem] uppercase tracking-[0.15em] font-medium mb-5">
+                    & RECEPCIÓN
+                </p>
+                
+                <div class="flex items-center justify-center gap-2 mb-2">
+                    <i data-lucide="map-pin" class="w-5 h-5 text-gray-600"></i>
+                    <p class="text-lg font-medium text-gray-800">Finca las Vegas</p>
+                </div>
+            </div>
+
+            <div class="mb-12 mt-4">
+                <a href="https://maps.app.goo.gl/KEqfQ2JUnqxQKRkV9" target="_blank" 
+                   class="inline-block border border-gray-500 bg-transparent text-gray-700 px-8 py-2.5 rounded-[20px] text-[11px] font-semibold tracking-[0.15em] transition-all hover:bg-gray-100 modern-button">
+                    VER MAPA
+                </a>
+            </div>
+
+            <p class="text-[13px] text-gray-600 tracking-[0.05em] font-medium">
+                Estacionamiento incluido
+            </p>
+
+        </div>
+
+       
+<!-- Título de la Sección -->
+<div class="moments-heading px-6 pt-8 pb-0 text-center z-10 relative">
+    <h3 class="font-script text-5xl text-olive-800 leading-none">Nuestros Momentos</h3>
+</div>
+
+<!-- Contenedor Mosaico para 7 fotos -->
+<div class="mosaic-container">
+    <button type="button" class="moment-card tall" data-photo-index="0">
+        <img src="https://lh3.googleusercontent.com/d/1V1NjtP5nJ8V5tVtpSf_2hGIrkc02Xz-v" class="mosaic-photo" alt="Momento 1">
+    </button>
+
+    <button type="button" class="moment-card short" data-photo-index="1">
+        <img src="https://lh3.googleusercontent.com/d/1nUks0AJ1TZakPcLaqCP8hSBGClnRmbR1" class="mosaic-photo" alt="Momento 2">
+    </button>
+
+    <button type="button" class="moment-card short" data-photo-index="2">
+        <img src="https://lh3.googleusercontent.com/d/1keDCT92LnW0RBHenU3bPa9AvsVBOacZx" class="mosaic-photo" alt="Momento 3">
+    </button>
+
+    <button type="button" class="moment-card tall" data-photo-index="3">
+        <img src="https://lh3.googleusercontent.com/d/1kE610fzxCY4xGAYxQk7ie3sMzomXxDBC" class="mosaic-photo" alt="Momento 4">
+    </button>
+
+    <button type="button" class="moment-card short" data-photo-index="4">
+        <img src="https://lh3.googleusercontent.com/d/1_vFNXs1a5SUYPsJqXwFhhamqE3SUuZY-" class="mosaic-photo" alt="Momento 5">
+    </button>
+
+    <button type="button" class="moment-card short" data-photo-index="5">
+        <img src="https://lh3.googleusercontent.com/d/1bupAgi0vY44XxnlmE2Fs49U9h6_LvbRW" class="mosaic-photo" alt="Momento 6">
+    </button>
+
+    <button type="button" class="moment-card tall" data-photo-index="6">
+        <img src="https://lh3.googleusercontent.com/d/1Dv_Gjv9oZ2VMvq4bQTNm2cBLHXa-rw9R" class="mosaic-photo" alt="Momento 7">
+    </button>
+
+    <button type="button" class="moment-card short" data-photo-index="7">
+        <img src="https://lh3.googleusercontent.com/d/10PADuGUzRSIUXI02W18o4vVfLiMvNVPk" class="mosaic-photo" alt="Momento 8">
+    </button>
+
+    <button type="button" class="moment-card short" data-photo-index="8">
+        <img src="https://lh3.googleusercontent.com/d/1zeHYn6R_8AjqYX8IG3SYnTy0qAypXrQf" class="mosaic-photo" alt="Momento 9">
+    </button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Código de Vestimenta Mejorado -->
+<div class="px-6 py-12 border-t border-gray-100 reveal text-center relative z-10 bg-gray-50/50">
+    <h3 class="font-script text-5xl text-olive-800 mb-8">Código de Vestimenta</h3>
+    
+<div class="max-w-sm mx-auto text-center">
+    <div class="flex justify-center -mb-2">
+        <img src="https://lh3.googleusercontent.com/d/14HrZz3wlx7YBV5crPTEu3DysRjnC44Tr" alt="Icono Vestimenta" class="w-20 h-20 object-contain">
+    </div>
+
+    <p class="font-bold text-gray-800 uppercase tracking-[0.3em] text-sm border-b border-gray-200 pb-4 pt-4 inline-block w-full">
+        FORMAL
+    </p>
+        <div class="text-gray-600 font-medium space-y-2">
+            <p>Mujeres: <span class="font-normal text-gray-500">Vaporoso largo</span></p>
+            <p>Hombres: <span class="font-normal text-gray-500">Camisa manga larga</span></p>
+        </div>
+
+        <p class="text-xs text-gray-400 italic px-4 leading-relaxed">
+            Reservamos el color blanco y verde oliva para la novia.
+        </p>
+
+        <!-- Círculos de Colores con Animación -->
+        <div id="dressColorSwatches" class="flex justify-center gap-8 mt-8 flex-wrap"></div>
+    </div>
+</div>
+    
+<!-- Sección Solo Adultos - Estilo Card con Título -->
+<div class="px-6 py-12 text-center relative z-10 reveal">
+    
+    <!-- Título de la Sección -->
+    <h3 class="font-script text-5xl text-olive-800 mb-8">Nota Especial</h3>
+
+    <!-- Contenedor de la Card -->
+    <div class="max-w-sm mx-auto rounded-2xl p-8 shadow-[0_8px_20px_rgba(0,0,0,0.15)] bg-gradient-to-br from-[#cebca3] via-[#c3b299] to-[#b09e86] text-white relative overflow-hidden">
+        
+        <!-- Efecto de brillo sutil en la tarjeta -->
+        <div class="absolute top-0 left-0 w-full h-full bg-white/5 opacity-50 pointer-events-none rounded-2xl"></div>
+
+        <!-- Icono de Copas -->
+        <div class="flex justify-center mb-6 relative z-10">
+            <svg class="w-12 h-12 text-white/95 animate-pulse pulse-3s" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 2L8 9C8 11.2091 9.79086 13 12 13C14.2091 13 16 11.2091 16 9L16 2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 13L12 22" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 22H15" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 6H16" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="11" cy="9" r="0.5" fill="currentColor"/>
+                <circle cx="13" cy="8" r="0.5" fill="currentColor"/>
+                <circle cx="12" cy="10" r="0.5" fill="currentColor"/>
+            </svg>
+        </div>
+        
+        <!-- Texto de la restricción -->
+        <p class="text-[0.75rem] md:text-[0.8rem] tracking-[0.15em] font-medium leading-relaxed uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)] relative z-10">
+            Aunque nos gustan los niños, <br class="mb-2">
+            esta será una celebración <br class="mt-2">
+            <span class="font-bold text-[0.85rem] border-b border-white/40 pb-1 inline-block mt-2">solo para adultos</span>
+        </p>
+    </div>
+
+</div>
+<!-- Sección de Video: Nuestra entrega de anillos -->
+<div class="px-6 py-12 text-center relative z-10 reveal pdf-hidden">
+    
+    <!-- Título con más significado -->
+    <h3 class="font-script text-4xl md:text-5xl text-olive-800 mb-2">El sello de nuestro amor</h3>
+    <p class="text-[0.7rem] uppercase tracking-[0.2em] text-gray-500 mb-8 italic">La entrega de nuestros anillos</p>
+
+    <!-- Contenedor del video: Más ancho (max-w-[320px]) y con sombras más profundas -->
+    <div class="max-w-[320px] mx-auto rounded-[2.5rem] overflow-hidden shadow-[0_25px_50px_rgba(0,0,0,0.3)] relative bg-black transition-transform duration-500 hover:scale-[1.02]">
+        
+        <video 
+            id="storyVideo"
+            class="w-full h-full object-cover cursor-pointer"
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="auto">
+            <source src="https://res.cloudinary.com/doylsjrnc/video/upload/v123456789/InShot_20260613_193614005_bsqj6d.mp4" type="video/mp4">
+        </video>
+
+        <!-- Indicador de pausa -->
+        <div id="pauseIndicator" class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 transition-opacity duration-300 bg-black/40">
+            <svg class="w-20 h-20 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+        </div>
+    </div>
+    
+    <p class="text-[0.65rem] uppercase tracking-[0.1em] text-gray-400 font-medium mt-6">
+        Mantén presionado para pausar
+    </p>
+
+</div>
+
+
+<!-- Sección Lluvia de Sobres - Más visual -->
+<div class="px-6 py-12 text-center relative z-10 reveal">
+    <h3 class="font-script text-5xl text-olive-800 mb-4">Detalles con Amor</h3>
+
+    <div class="gift-envelope-card max-w-md mx-auto" aria-label="Lluvia de sobres">
+        <div class="gift-envelope-scene" aria-hidden="true">
+            <span class="gift-bill bill-one">$</span>
+            <span class="gift-bill bill-two">$</span>
+            <span class="gift-mini-envelope envelope-one"></span>
+            <span class="gift-mini-envelope envelope-two"></span>
+            <div class="gift-main-envelope">
+                <i data-lucide="mail-heart" class="w-14 h-14"></i>
+            </div>
+        </div>
+
+        <p class="gift-copy">
+            Tu presencia es nuestro mayor regalo. Si deseas hacernos un obsequio, será recibido con mucho cariño en <strong class="gift-highlight">LLUVIA DE SOBRES</strong>.
+        </p>
+    </div>
+</div>
+    
+  <div class="px-6 py-12 text-center relative z-10 reveal pdf-hidden">
+    
+    <h3 class="font-script text-5xl text-olive-800 mb-6">Confirmación</h3>
+    <p class="text-gray-600 mb-8 max-w-xs mx-auto text-sm">
+        Por favor, confírmanos antes del 30 de noviembre para organizar todos los detalles.
+    </p>
+            <form id="confirmationForm" action="https://docs.google.com/forms/d/e/1FAIpQLSeRsyXSdfLChpakhBAvpD_bzzc-PsSYGbwLM7BF_UOWPM84LA/formResponse" method="POST" class="space-y-4">
+    
+    <div id="guestInputs" class="space-y-4"></div>
+
+    <div class="mb-6">
+        <label class="block text-sm text-gray-700 mb-2 font-medium text-left">¿Requieres servicio de transporte (bus)?</label>
+        <select name="transporte" required class="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-olive-600 text-sm">
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="si">Sí, requiero el servicio de transporte</option>
+            <option value="no">No, llegaré por mi cuenta</option>
+        </select>
+    </div>
+
+    <button type="submit" class="w-full bg-olive-800 text-white py-3 rounded-xl font-bold uppercase tracking-widest hover:bg-olive-900 transition-colors mt-2 modern-button">
+        Confirmar
+    </button>
+</form>
+        <!-- Mensaje que aparecerá al enviar -->
+<div id="result" class="mt-4 text-sm text-olive-800 font-medium">
+    ¡Gracias! Tu asistencia ha sido confirmada.
+</div>
+
+        </div>
+
+        <div class="countdown-panel max-w-md mx-auto p-8 rounded-3xl glass-panel reveal">
+            <h5 class="text-2xl font-semibold tracking-[0.2em] uppercase text-olive-900 mb-1">¡Prepárate!</h5>
+            <p class="text-[0.7rem] uppercase tracking-[0.2em] text-gray-500 font-medium mb-8">Nos vemos dentro de</p>
+            <div class="countdown-grid flex justify-center gap-3">
+                <div class="flex flex-col items-center">
+                    <div class="count-box animate-pulse-slow" id="days">--</div>
+                    <span class="count-label">DÍAS</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="count-box animate-pulse-slow" id="hours">--</div>
+                    <span class="count-label">HRS</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="count-box animate-pulse-slow" id="minutes">--</div>
+                    <span class="count-label">MIN</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="count-box animate-pulse-slow" id="seconds">--</div>
+                    <span class="count-label">SEG</span>
+                </div>
+            </div>
+        </div>
+
+<div class="scroll-reveal max-w-md mx-auto mt-8 p-6 bg-white rounded-3xl border border-olive-100 shadow-sm text-center">
+    
+    <div class="mb-4 text-olive-800">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+        </svg>
+    </div>
+
+    <h6 class="text-olive-900 font-semibold uppercase tracking-widest text-sm mb-3">Información de Transporte</h6>
+    
+    <p class="text-gray-600 text-sm leading-relaxed mb-4 animate-zoom-in">
+        Si confirmaste el uso del bus, el punto de encuentro es en la <span class="font-bold text-olive-800">Calle 65a #28-133</span>.
+    </p>
+
+    <div class="inline-block bg-olive-50 px-4 py-2 rounded-lg mb-4 animate-zoom-in">
+        <span class="text-olive-900 font-bold">Hora de salida: 3:00 PM</span>
+    </div>
+
+    <p class="text-xs text-gray-500 italic">
+        * Agradecemos tu puntualidad. Por respeto a los demás invitados, el servicio esperará un máximo de 15 minutos antes de partir.
+    </p>
+</div>
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+<!-- Estilo para la animación de flotación -->
+
+
+
+
+
+
+
+
+
+<!-- Script para controlar la pausa al tocar -->
+
+    
+
+
+
+
+    
+<button id="musicToggle" type="button" class="music-toggle" aria-label="Pausar o reproducir música">
+    <i data-lucide="volume-2" class="w-5 h-5"></i>
+</button>
+
+
+
+
+    
+    <section id="playlistSection" class="playlist-section pdf-hidden px-6 mt-12 text-center relative z-10 reveal">
+        <div class="playlist-card max-w-md mx-auto">
+            <div class="playlist-icon" aria-hidden="true">
+                <i data-lucide="music-2" class="w-6 h-6"></i>
+            </div>
+            <p class="playlist-kicker">Para bailar juntos</p>
+            <h3 class="font-script text-5xl text-olive-800 mb-3">La canción que no puede faltar</h3>
+            <p class="playlist-copy">
+                Déjanos esa canción que quieres escuchar en nuestra celebración.
+            </p>
+
+            <form id="playlistForm" class="playlist-form" autocomplete="off">
+                <div class="playlist-autocomplete">
+                    <input type="text" name="titulo" placeholder="Nombre de la canción" required autocomplete="off">
+                    <div id="playlistSuggestions" class="playlist-suggestions hidden"></div>
+                </div>
+                <input type="text" name="artista" placeholder="Artista o versión">
+                <select name="genero" class="playlist-genre" aria-label="Género musical">
+                    <option value="Otro" selected>Género: Otro / No estoy seguro</option>
+                    <option value="Salsa">Salsa</option>
+                    <option value="Vallenato">Vallenato</option>
+                    <option value="Reggaetón">Reggaetón</option>
+                    <option value="Bachata">Bachata</option>
+                    <option value="Merengue">Merengue</option>
+                    <option value="Popular">Popular</option>
+                    <option value="Romántica">Romántica</option>
+                    <option value="Cristiana">Cristiana</option>
+                    <option value="Pop">Pop</option>
+                    <option value="Viejoteca">Viejoteca</option>
+                </select>
+                <button type="submit" class="playlist-submit modern-button">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                    Enviar canción
+                </button>
+            </form>
+
+            <div id="playlistMessage" class="playlist-message hidden"></div>
+            <label class="playlist-filter-select">
+                <span>Ver género</span>
+                <select id="playlistGenreFilter" aria-label="Filtrar canciones por género">
+                    <option value="Todas">Todas</option>
+                </select>
+            </label>
+            <div id="playlistSongs" class="playlist-songs" aria-live="polite"></div>
+        </div>
+    </section>
+
+    <section id="memoriesSection" class="memories-section px-6 mt-14 mb-8 text-center relative z-10 reveal">
+        <div class="memories-card max-w-md mx-auto">
+            <div class="memories-icon" aria-hidden="true">
+                <i data-lucide="images" class="w-6 h-6"></i>
+            </div>
+            <p class="memories-kicker">Recuerdos de la celebración</p>
+            <h3 class="font-script text-5xl text-olive-800 mb-3">Comparte tus fotos</h3>
+            <p class="memories-copy">
+                Si quieres dejarnos un recuerdo después de la celebración o ver fotos tomadas por otros invitados, sube aquí tus momentos favoritos.
+            </p>
+
+            <form id="memoriesForm" class="memories-form" autocomplete="off">
+                <label class="memories-file">
+                    <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+                    <span>Seleccionar fotos</span>
+                    <input type="file" name="foto" accept="image/*,.heic,.heif" multiple required>
+                </label>
+                <button type="submit" class="memories-submit modern-button">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                    Subir recuerdo
+                </button>
+            </form>
+
+            <div id="memoriesMessage" class="memories-message hidden"></div>
+            <div id="memoriesGallery" class="memories-gallery" aria-live="polite"></div>
+            <button type="button" id="loadMoreMemories" class="memories-more hidden">
+                Ver más recuerdos
+            </button>
+        </div>
+    </section>
+
+    <footer class="mt-10 mb-8 text-center relative z-10">
+        <div class="inline-block border-t border-gray-200 pt-6 px-12">
+            <p class="text-[0.65rem] uppercase tracking-[0.3em] text-gray-400 font-light">
+                creado con amor por
+                <span class="text-olive-700 font-medium tracking-wider">STIVEN QUINTERO</span>
+            </p>
+        </div>
+    </footer>
+</div>
+</div>
+
+<div id="photoLightbox" class="photo-lightbox">
+    <div class="lightbox-content">
+
+        <button class="close-lightbox" aria-label="Cerrar frase">
+            ×
+        </button>
+
+        <div class="hearts" id="heartsContainer"></div>
+
+        <img id="lightboxImg" class="lightbox-image" alt="Momento especial">
+
+        <p id="loveMessage" class="love-message"></p>
+
+    </div>
+</div>
+
+<div id="songLightbox" class="song-lightbox" aria-hidden="true">
+    <div class="song-lightbox-card">
+        <button type="button" class="song-lightbox-close" aria-label="Cerrar canción">×</button>
+        <div id="songLightboxCover" class="song-lightbox-cover">
+            <i data-lucide="music-2" class="w-10 h-10"></i>
+        </div>
+        <p id="songLightboxGenre" class="song-lightbox-genre"></p>
+        <h4 id="songLightboxTitle"></h4>
+        <p id="songLightboxArtist" class="song-lightbox-artist"></p>
+        <p id="songLightboxVotes" class="song-lightbox-votes"></p>
+        <div class="song-lightbox-recommenders">
+            <span>Recomendada por</span>
+            <div id="songLightboxPeople"></div>
+        </div>
+    </div>
+</div>
+
+<div id="memoryLightbox" class="memory-lightbox" aria-hidden="true">
+    <button type="button" class="memory-close" aria-label="Cerrar foto">×</button>
+    <button type="button" class="memory-nav memory-prev" aria-label="Foto anterior">
+        <i data-lucide="chevron-left" class="w-7 h-7"></i>
+    </button>
+    <img id="memoryLightboxImg" src="" alt="Foto de la celebración">
+    <a id="memoryDownload" class="memory-real-download" href="#" download target="_blank" rel="noopener">
+        <i data-lucide="download" class="w-4 h-4"></i>
+        Descargar
+    </a>
+    <button type="button" class="memory-nav memory-next" aria-label="Foto siguiente">
+        <i data-lucide="chevron-right" class="w-7 h-7"></i>
+    </button>
+</div>
+
+<div id="promiseLightbox" class="promise-lightbox" aria-hidden="true">
+    <div class="promise-lightbox-content">
+        <button type="button" class="close-promise-lightbox" aria-label="Cerrar mensaje">×</button>
+        <p class="promise-kicker">Nuestra promesa</p>
+        <h4 id="promiseMessage">Dios es y será TODO en nuestras vidas</h4>
+        <p id="promiseDetail">Que su amor guíe cada paso, cada decisión y cada sueño que construyamos juntos.</p>
+    </div>
+</div>
+
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
+
