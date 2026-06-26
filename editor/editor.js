@@ -144,11 +144,21 @@ function buildPreviewHtml() {
       #musicToggle,
       audio { display: none !important; }
       #invitationContent { display: block !important; }
+      #hero-text { display: flex !important; opacity: 1 !important; visibility: visible !important; }
+      #hero-text h1,
+      .hero-subtitle,
+      .fade-text { opacity: 1 !important; visibility: visible !important; animation: none !important; }
+      .slide:first-child { opacity: 1 !important; transform: scale(1.04) !important; }
+      .reveal,
+      .scroll-reveal,
+      .bible-card,
+      .moment-card { opacity: 1 !important; transform: none !important; filter: none !important; }
       body { min-height: 100vh; }
     </style>
   `;
   return baseHtml
-    .replace(/<head>/, `<head><base href="../">${previewStyle}`)
+    .replace(/<head>/, '<head><base href="../">')
+    .replace(/<\/head>/, `${previewStyle}</head>`)
     .replace(/<script src="config\.js"><\/script>/, inlineConfig)
     .replace(/<script defer src="https:\/\/analytics\.pocketstiven\.com\/script\.js"[^>]*><\/script>/, '');
 }
