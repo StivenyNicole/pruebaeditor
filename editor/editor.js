@@ -2,22 +2,51 @@
 let baseHtml = '';
 let updateTimer = null;
 let selectedEditable = null;
+let pendingImageTarget = null;
 
 const editableTargets = [
+  { selector: '#hero-text h1', path: 'textos.heroTitulo', label: 'Portada' },
   { selector: '.bible-card h3', path: 'promesa.titulo', label: 'Promesa' },
   { selector: '.bible-card-content p.italic', path: 'promesa.versiculo', label: 'Versiculo', unwrapQuotes: true },
   { selector: '.bible-card-content .mt-6', path: 'promesa.cita', label: 'Cita' },
   { selector: '.px-6.py-10 h2', path: 'textos.tituloPrincipal', label: 'Titulo' },
   { selector: '.px-6.py-10 h3', path: 'textos.saveTheDate', label: 'Save the date' },
+  { selector: '.px-6.py-10 > p', path: 'textos.fechaCalendario', label: 'Mes calendario' },
   { selector: '.px-6.py-12.border-t h3', path: 'textos.celebra', label: 'Celebra' },
+  { selector: '.mb-8.text-gray-600 > p:nth-child(1)', path: 'textos.ceremonia', label: 'Ceremonia' },
+  { selector: '.mb-8.text-gray-600 > p:nth-child(2)', path: 'textos.recepcion', label: 'Recepcion' },
+  { selector: '.mb-8.text-gray-600 .text-lg', path: 'evento.lugar', label: 'Lugar' },
   { selector: '.moments-heading h3', path: 'textos.momentosTitulo', label: 'Momentos' },
+  { selector: 'h3.font-script.text-5xl.text-olive-800.mb-8', path: 'textos.vestimentaTitulo', label: 'Vestimenta' },
+  { selector: '.max-w-sm .font-bold.text-gray-800', path: 'textos.vestimentaTipo', label: 'Tipo vestimenta' },
+  { selector: '.max-w-sm .text-xs.text-gray-400.italic', path: 'textos.vestimentaNota', label: 'Nota vestimenta' },
   { selector: '.playlist-card h3', path: 'playlist.titulo', label: 'Playlist' },
+  { selector: '.playlist-kicker', path: 'playlist.kicker', label: 'Kicker playlist' },
   { selector: '.playlist-copy', path: 'playlist.descripcion', label: 'Texto playlist' },
   { selector: '.memories-card h3', path: 'recuerdos.titulo', label: 'Recuerdos' },
+  { selector: '.memories-kicker', path: 'recuerdos.kicker', label: 'Kicker recuerdos' },
   { selector: '.memories-copy', path: 'recuerdos.descripcion', label: 'Texto recuerdos' },
   { selector: '.gift-envelope-card .gift-copy', path: 'textos.regalosTexto', label: 'Regalos' },
   { selector: '.glass-panel h5', path: 'textos.contadorTitulo', label: 'Contador' },
+  { selector: '.glass-panel > p', path: 'textos.contadorSubtitulo', label: 'Texto contador' },
   { selector: '.scroll-reveal h6', path: 'textos.transporteTitulo', label: 'Transporte' }
+].filter((target) => target.path);
+
+const imageTargets = [
+  { selector: '.envelope-half img', path: 'multimedia.sobre', label: 'Sobre', all: true },
+  { selector: '#carousel .slide', path: 'multimedia.carrusel', label: 'Carrusel', list: true },
+  { selector: '.blurred-edges', path: 'multimedia.ilustracionPareja', label: 'Ilustracion' },
+  { selector: '.moment-card img', path: 'multimedia.momentos', label: 'Momento', list: true },
+  { selector: 'img[alt="Icono Vestimenta"]', path: 'multimedia.iconoVestimenta', label: 'Vestimenta' }
+];
+
+const sectionTargets = [
+  { selector: '.bible-card', id: 'promesa', label: 'Nuestra promesa' },
+  { selector: '.px-6.py-10.text-center', id: 'fecha', label: 'Fecha' },
+  { selector: '.moments-heading', id: 'momentosTitulo', label: 'Titulo momentos', groupSelector: '.moments-heading, .mosaic-container' },
+  { selector: '.mosaic-container', id: 'momentosFotos', label: 'Fotos momentos' },
+  { selector: '#playlistSection', id: 'playlist', label: 'Canciones' },
+  { selector: '#memoriesSection', id: 'recuerdos', label: 'Recuerdos' }
 ];
 
 const $ = (selector) => document.querySelector(selector);
@@ -35,6 +64,14 @@ function setValue(path, value) {
     return current[key];
   }, config);
   target[last] = value;
+}
+
+function moveArrayItem(items, fromIndex, toIndex) {
+  if (!Array.isArray(items) || toIndex < 0 || toIndex >= items.length) return items;
+  const copy = [...items];
+  const [item] = copy.splice(fromIndex, 1);
+  copy.splice(toIndex, 0, item);
+  return copy;
 }
 
 function ensureStyleBucket() {
@@ -59,6 +96,15 @@ function setStyle(path, property, value) {
 
 function syncJson() {
   $('#configJson').value = JSON.stringify(config, null, 2);
+}
+
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 }
 
 function syncField(path) {
@@ -139,6 +185,7 @@ function syncFromForm() {
 function buildPreviewHtml() {
   const inlineConfig = `<script>${serializeConfig(config).replace(/<\/script>/g, '<\\/script>')}<\/script>`;
   const previewStyle = `
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Dancing+Script:wght@400;600;700&family=Great+Vibes&family=Lora:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&family=Parisienne&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
       #envelopeScreen,
       #musicToggle,
@@ -153,6 +200,38 @@ function buildPreviewHtml() {
       .scroll-reveal,
       .bible-card,
       .moment-card { opacity: 1 !important; transform: none !important; filter: none !important; }
+      .editor-image-wrap { position: relative !important; }
+      .editor-image-action,
+      .editor-section-action {
+        position: absolute !important;
+        z-index: 999999 !important;
+        width: 34px !important;
+        height: 34px !important;
+        min-height: 34px !important;
+        border: 0 !important;
+        border-radius: 999px !important;
+        display: grid !important;
+        place-items: center !important;
+        color: #fff !important;
+        background: rgba(21, 29, 20, .78) !important;
+        box-shadow: 0 12px 28px rgba(0,0,0,.24) !important;
+        backdrop-filter: blur(10px) !important;
+        cursor: pointer !important;
+        font: 900 18px/1 Montserrat, sans-serif !important;
+      }
+      .editor-image-action { top: 10px !important; right: 10px !important; }
+      .editor-section-tools {
+        position: absolute !important;
+        top: 10px !important;
+        left: 10px !important;
+        z-index: 999998 !important;
+        display: flex !important;
+        gap: 6px !important;
+      }
+      .editor-section-action {
+        position: static !important;
+        font-size: 13px !important;
+      }
       body { min-height: 100vh; }
     </style>
   `;
@@ -258,10 +337,123 @@ function applyInlineStyle(property, value) {
   positionToolbar(selectedEditable.element);
 }
 
+function setImageValue(target, index, value) {
+  if (target.list) {
+    const list = getValue(target.path) || [];
+    list[index] = value;
+    setValue(target.path, list);
+  } else {
+    setValue(target.path, value);
+  }
+  hydrateForm();
+}
+
+function wrapImageForEditing(image, target, index) {
+  const doc = image.ownerDocument;
+  const wrapper = doc.createElement('span');
+  wrapper.className = 'editor-image-wrap';
+  wrapper.style.display = getComputedStyle(image).display === 'block' ? 'block' : 'inline-block';
+
+  image.parentNode.insertBefore(wrapper, image);
+  wrapper.appendChild(image);
+
+  const button = doc.createElement('button');
+  button.type = 'button';
+  button.className = 'editor-image-action';
+  button.textContent = '⋯';
+  button.title = `Cambiar ${target.label}`;
+  button.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    pendingImageTarget = { image, target, index };
+    $('#imagePicker').click();
+  });
+  wrapper.appendChild(button);
+}
+
+function attachImageEditing() {
+  const doc = $('#previewFrame').contentDocument;
+  if (!doc) return;
+
+  imageTargets.forEach((target) => {
+    doc.querySelectorAll(target.selector).forEach((image, index) => {
+      if (image.dataset.editorImageReady === 'true') return;
+      image.dataset.editorImageReady = 'true';
+      wrapImageForEditing(image, target, index);
+    });
+  });
+}
+
+function ensureOrderConfig() {
+  if (!Array.isArray(config.seccionesOrden)) {
+    config.seccionesOrden = sectionTargets.map((section) => section.id);
+  }
+  return config.seccionesOrden;
+}
+
+function moveSection(sectionId, direction) {
+  const order = ensureOrderConfig();
+  const index = order.indexOf(sectionId);
+  const nextIndex = index + direction;
+  if (index < 0 || nextIndex < 0 || nextIndex >= order.length) return;
+  config.seccionesOrden = moveArrayItem(order, index, nextIndex);
+  syncJson();
+  renderPreview();
+}
+
+function applySectionOrder(doc) {
+  const order = ensureOrderConfig();
+  const sections = new Map(sectionTargets.map((section) => [section.id, section]));
+  const anchor = doc.querySelector('#invitationContent .invitation-container');
+  const footer = doc.querySelector('footer');
+  if (!anchor) return;
+
+  order.forEach((id) => {
+    const section = sections.get(id);
+    if (!section) return;
+    doc.querySelectorAll(section.groupSelector || section.selector).forEach((element) => {
+      anchor.insertBefore(element, footer || null);
+    });
+  });
+}
+
+function attachSectionControls() {
+  const doc = $('#previewFrame').contentDocument;
+  if (!doc) return;
+
+  sectionTargets.forEach((section) => {
+    const element = doc.querySelector(section.selector);
+    if (!element || element.dataset.editorSectionReady === 'true') return;
+    element.dataset.editorSectionReady = 'true';
+    if (getComputedStyle(element).position === 'static') element.style.position = 'relative';
+
+    const tools = doc.createElement('div');
+    tools.className = 'editor-section-tools';
+    tools.innerHTML = `
+      <button type="button" class="editor-section-action" title="Subir sección">↑</button>
+      <button type="button" class="editor-section-action" title="Bajar sección">↓</button>
+    `;
+    const [up, down] = tools.querySelectorAll('button');
+    up.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      moveSection(section.id, -1);
+    });
+    down.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      moveSection(section.id, 1);
+    });
+    element.appendChild(tools);
+  });
+}
+
 function attachInlineEditing() {
   const frame = $('#previewFrame');
   const doc = frame.contentDocument;
   if (!doc) return;
+
+  applySectionOrder(doc);
 
   const style = doc.createElement('style');
   style.textContent = `
@@ -293,6 +485,9 @@ function attachInlineEditing() {
   doc.addEventListener('click', (event) => {
     if (!event.target.closest('[data-editor-path]')) hideToolbar();
   });
+
+  attachImageEditing();
+  attachSectionControls();
 }
 
 function downloadFile(fileName, content, type = 'text/javascript') {
@@ -359,6 +554,17 @@ async function initEditor() {
   $('#inlineDone').addEventListener('click', hideToolbar);
   window.addEventListener('resize', () => {
     if (selectedEditable) positionToolbar(selectedEditable.element);
+  });
+  $('#imagePicker').addEventListener('change', async (event) => {
+    const file = event.target.files?.[0];
+    if (!file || !pendingImageTarget) return;
+
+    const dataUrl = await readFileAsDataUrl(file);
+    pendingImageTarget.image.src = dataUrl;
+    setImageValue(pendingImageTarget.target, pendingImageTarget.index, dataUrl);
+    pendingImageTarget = null;
+    event.target.value = '';
+    renderPreview();
   });
 
   if (window.lucide) window.lucide.createIcons();
