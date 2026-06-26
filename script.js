@@ -1304,7 +1304,9 @@ function applyInvitationConfig(){
 
     const heroTitle = document.querySelector('#hero-text h1');
     if (heroTitle && pareja.nombre1 && pareja.nombre2) {
-        heroTitle.innerHTML = `${pareja.nombre1} <br> <span class="text-5xl">&</span> <br> ${pareja.nombre2}<span class="hero-subtitle block font-sans text-[0.62rem] uppercase tracking-[0.34em] mt-4 text-white/90">${eventDisplayDate}</span>`;
+        heroTitle.innerHTML = textos.heroTitulo
+            ? `${textos.heroTitulo}<span class="hero-subtitle block font-sans text-[0.62rem] uppercase tracking-[0.34em] mt-4 text-white/90">${eventDisplayDate}</span>`
+            : `${pareja.nombre1} <br> <span class="text-5xl">&</span> <br> ${pareja.nombre2}<span class="hero-subtitle block font-sans text-[0.62rem] uppercase tracking-[0.34em] mt-4 text-white/90">${eventDisplayDate}</span>`;
     }
 
     (multimedia.carrusel || []).forEach((src, index) => {
@@ -1428,21 +1430,33 @@ function applyInvitationConfig(){
     }
 
     setText('.playlist-card h3', playlistTextos.titulo);
+    setText('.playlist-kicker', playlistTextos.kicker);
     setText('.playlist-copy', playlistTextos.descripcion);
     setText('.memories-card h3', recuerdosTextos.titulo);
+    setText('.memories-kicker', recuerdosTextos.kicker);
     setText('.memories-copy', recuerdosTextos.descripcion);
 
     const editableStyleTargets = [
+        { selector: '#hero-text h1', path: 'textos.heroTitulo' },
         { selector: '.bible-card h3', path: 'promesa.titulo' },
         { selector: '.bible-card-content p.italic', path: 'promesa.versiculo' },
         { selector: '.bible-card-content .mt-6', path: 'promesa.cita' },
         { selector: '.px-6.py-10 h2', path: 'textos.tituloPrincipal' },
         { selector: '.px-6.py-10 h3', path: 'textos.saveTheDate' },
+        { selector: '.px-6.py-10 > p', path: 'textos.fechaCalendario' },
         { selector: '.px-6.py-12.border-t h3', path: 'textos.celebra' },
+        { selector: '.mb-8.text-gray-600 > p:nth-child(1)', path: 'textos.ceremonia' },
+        { selector: '.mb-8.text-gray-600 > p:nth-child(2)', path: 'textos.recepcion' },
+        { selector: '.mb-8.text-gray-600 .text-lg', path: 'evento.lugar' },
         { selector: '.moments-heading h3', path: 'textos.momentosTitulo' },
+        { selector: 'h3.font-script.text-5xl.text-olive-800.mb-8', path: 'textos.vestimentaTitulo' },
+        { selector: '.max-w-sm .font-bold.text-gray-800', path: 'textos.vestimentaTipo' },
+        { selector: '.max-w-sm .text-xs.text-gray-400.italic', path: 'textos.vestimentaNota' },
         { selector: '.playlist-card h3', path: 'playlist.titulo' },
+        { selector: '.playlist-kicker', path: 'playlist.kicker' },
         { selector: '.playlist-copy', path: 'playlist.descripcion' },
         { selector: '.memories-card h3', path: 'recuerdos.titulo' },
+        { selector: '.memories-kicker', path: 'recuerdos.kicker' },
         { selector: '.memories-copy', path: 'recuerdos.descripcion' },
         { selector: '.gift-envelope-card .gift-copy', path: 'textos.regalosTexto' },
         { selector: '.glass-panel h5', path: 'textos.contadorTitulo' },
@@ -1459,6 +1473,28 @@ function applyInvitationConfig(){
             });
         });
     });
+
+    const sectionTargets = [
+        { selector: '.bible-card', id: 'promesa' },
+        { selector: '.px-6.py-10.text-center', id: 'fecha' },
+        { selector: '.moments-heading', id: 'momentosTitulo', groupSelector: '.moments-heading, .mosaic-container' },
+        { selector: '.mosaic-container', id: 'momentosFotos' },
+        { selector: '#playlistSection', id: 'playlist' },
+        { selector: '#memoriesSection', id: 'recuerdos' }
+    ];
+    const sectionOrder = Array.isArray(config.seccionesOrden) ? config.seccionesOrden : [];
+    const container = document.querySelector('#invitationContent .invitation-container');
+    if (container && sectionOrder.length) {
+        const sections = new Map(sectionTargets.map((section) => [section.id, section]));
+        const footer = document.querySelector('footer');
+        sectionOrder.forEach((id) => {
+            const section = sections.get(id);
+            if (!section) return;
+            document.querySelectorAll(section.groupSelector || section.selector).forEach((element) => {
+                container.insertBefore(element, footer || null);
+            });
+        });
+    }
 }
 
 const loveTexts = (window.INVITACION_CONFIG && window.INVITACION_CONFIG.frasesMomentos) || [
